@@ -1,10 +1,14 @@
 const express = require('express')
 const http = require('http')
+const querystring = require('querystring');
 
 const app = express()
 
 app.get('/api/getTransport', (req, expressResponse) => {
-  http.get('http://transport.opendata.ch/v1/locations?query=Baden', httpGetResponse => {
+  const apiUrl = 'http://transport.opendata.ch/v1/locations'
+  const requestUrl = `${apiUrl}?${req.query.query ? `${querystring.stringify(req.query)}` : 'query=Baden'}`
+
+  http.get(requestUrl, httpGetResponse => {
     const {
       statusCode
     } = httpGetResponse

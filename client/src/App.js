@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {Component} from 'react'
+import {sortBy} from 'underscore'
 
 const TableHeader = props =>
   <thead>
@@ -24,21 +25,33 @@ const TableBody = ({list})=>
     )}
   </tbody>
 
-const App = () => {
-  const list = ['a', 'b']
+class App extends Component {
+  state = {
+    list: []
+  }
 
-  return (
-    <div>
-    {list.length ? (
-      <table>
-        <TableHeader />
-        <TableBody list={list} />
-      </table>
-    ): (
-      <span>no results</span>
-    )}
-    </div>
-  )
+  componentDidMount() {
+    this.getList();
+  }
+
+  getList = () => this.setState({list: sortBy(['a', 'x', 'b', 'z'])})
+
+  render () {
+    const {list} = this.state
+
+    return (
+      <div>
+      {list.length ? (
+        <table>
+          <TableHeader />
+          <TableBody list={list} />
+        </table>
+      ): (
+        <span>no results</span>
+      )}
+      </div>
+    )
+  }
 }
 
 

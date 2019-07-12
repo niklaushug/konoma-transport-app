@@ -31,16 +31,22 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getList();
+    this.getList()
   }
 
   getList = () => this.setState({list: sortBy(['a', 'x', 'b', 'z'])})
+
+  reverseList = () =>
+    this.setState(prevState => ({
+        list: prevState.list.reverse()
+    }))
 
   render () {
     const {list} = this.state
 
     return (
       <div>
+      <button onClick={this.reverseList}>sort by name</button>
       {list.length ? (
         <table>
           <TableHeader />

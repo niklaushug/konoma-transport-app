@@ -1,8 +1,11 @@
 const express = require('express')
 const http = require('http')
 const querystring = require('querystring');
+const cors = require('cors');
 
 const app = express()
+
+app.use(cors())
 
 app.get('/api/getTransport', (req, expressResponse) => {
   const apiUrl = 'http://transport.opendata.ch/v1/locations'

@@ -39,7 +39,8 @@ const TableBody = ({list})=>
 
 class App extends Component {
   state = {
-    list: []
+    list: [],
+    query: 'Baden'
   }
 
   componentDidMount() {
@@ -47,9 +48,14 @@ class App extends Component {
   }
 
   getList = () => {
-    fetch('http://localhost:5000/api/getTransport?query=Bern')
+    fetch(`http://localhost:5000/api/getTransport?query=${this.state.query}`)
     .then(res => res.json())
     .then(list => this.setState({list: sortBy(list, 'name')}))
+  }
+
+  handleQueryChange = (e) => {
+    this.setState({query: e.target.value})
+    this.getList()
   }
 
   reverseList = () =>
@@ -62,6 +68,14 @@ class App extends Component {
 
     return (
       <div>
+        <label>Location Query
+          <input
+            onChange={this.handleQueryChange}
+            type="text"
+            value={this.state.query}
+          />
+        </label>
+
         {list.length ? (
           <React.Fragment>
             {list.length > 1

@@ -40,23 +40,27 @@ const TableBody = ({list})=>
 class App extends Component {
   state = {
     list: [],
+    type: 'all',
     query: 'Baden'
   }
 
-  componentDidMount() {
-    this.getList()
-  }
-
   getList = () => {
-    fetch(`http://localhost:5000/api/getTransport?query=${this.state.query}`)
+    console.log(`fetch from http://localhost:5000/api/getTransport?query=${this.state.query}&type=${this.state.type}`)
+    fetch(`http://localhost:5000/api/getTransport?query=${this.state.query}&type=${this.state.type}`)
     .then(res => res.json())
     .then(list => this.setState({list: sortBy(list, 'name')}))
   }
 
   handleQueryChange = (e) => {
     this.setState({query: e.target.value})
-    this.getList()
   }
+
+  handleTypeChange = (e) => {
+    this.setState({type: e.target.value})
+  }
+
+  handleSearch = () => this.getList()
+
 
   reverseList = () =>
     this.setState(prevState => ({
@@ -75,6 +79,23 @@ class App extends Component {
             value={this.state.query}
           />
         </label>
+        <br />
+
+        <label>Location Type
+          <select
+            onChange={this.handleTypeChange}
+            value={this.state.type}
+          >
+            <option value="all">all</option>
+            <option value="station">station</option>
+            <option value="poi">poi</option>
+            <option value="address">address</option>
+          </select>
+        </label>
+        <br />
+
+        <button onClick={this.handleSearch}>search now</button>
+        <br />
 
         {list.length ? (
           <React.Fragment>

@@ -1,4 +1,4 @@
-# Transport AP
+# Transport App
 ## Setup
 1. git clone [https://github.com/niklaushug/konoma-transport-app](https://github.com/niklaushug/konoma-transport-app)
 2. cd konoma-transport-app
